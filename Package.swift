@@ -23,6 +23,8 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "M3UTests",
-            dependencies: ["M3U"]),
+            dependencies: ["M3U"],
+            resources: [
+                .process("resources/test.m3u")]),
     ]
 )
