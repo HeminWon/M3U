@@ -13,6 +13,10 @@ public struct ChannelProperty: Codable {
     public fileprivate(set) var tvg_logo: String?
     public fileprivate(set) var tvg_name: String?
     public fileprivate(set) var group_title: String?
+    
+    private enum CodingKeys : String, CodingKey {
+        case tvg_id = "tvg-id", tvg_logo = "tvg-logo", tvg_name = "tvg-name", group_title = "group-title"
+    }
 }
 
 public struct Channel: Codable {
@@ -23,8 +27,12 @@ public struct Channel: Codable {
 }
 
 public struct M3U {
-    public static func load(m3u: String) throws -> [Channel] {
-        return try Parser.init(m3u:m3u).m3uToChannels()
+    public static func load(content: String) throws -> [Channel] {
+        return try Parser.init(content:content).m3uToChannels()
+    }
+    
+    public static func load(path: URL) throws -> [Channel] {
+        return try Parser.init(path: path).m3uToChannels()
     }
 
     public init() {
@@ -32,16 +40,21 @@ public struct M3U {
 }
 
 public final class Parser {
-    public let m3u: String
+    public let m3ucontent: String
     
     var listach = [Channel]()
     
-    public init(m3u string: String) throws {
-        m3u = string
+    public init(content: String) throws {
+        m3ucontent = content
+    }
+    
+    public init(path: URL) throws {
+        let content = try String(contentsOf: path)
+        m3ucontent = content
     }
     
     public func m3uToChannels() throws -> [Channel] {
-        let rows = m3u.components(separatedBy:"\n").filter { return $0.count > 0 }
+        let rows = m3ucontent.components(separatedBy:"\n").filter { return $0.count > 0 }
         guard rows.count > 0 else {
             throw M3uError.invalidEXTM3U
         }
@@ -55,6 +68,9 @@ public final class Parser {
             }
             else if row.hasPrefix("#EXT") {
                 chanel.propMap = try self.parseProperties(row: row)
+                let json = try JSONSerialization.data(withJSONObject: chanel.propMap as Any)
+                let prop = try JSONDecoder().decode(ChannelProperty.self, from: json)
+                chanel.prop = prop
                 chanel.name = self.parseName(row: row)
             }
             else if row.contains("://") {
