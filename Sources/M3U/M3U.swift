@@ -104,21 +104,22 @@ public final class Parser {
     
     func parseProperties(row: String) throws -> [String: String] {
         var retdict = [String: String]()
-        let regex = "#EXT.*:(-?\\d+)\\s(.*?=.*?)\\s?\\,\\s?(.*?$)"
-        let RE = try NSRegularExpression(pattern: regex, options: .caseInsensitive)
-        let matches = RE.matches(in: row, options: .reportProgress, range: NSRange(location: 0, length: row.count))
-        print(matches.count)
-        for item in matches {
+//        let regex = "#EXT.*:(-?\\d+)\\s(.*?=.*?)\\s?\\,\\s?(.*?$)"
+//        let RE = try NSRegularExpression(pattern: regex, options: .caseInsensitive)
+//        let matches = RE.matches(in: row, options: .reportProgress, range: NSRange(location: 0, length: row.count))
+        
+        let regexMap = "(\\S*?=\".*?\")"
+        let REMap = try NSRegularExpression(pattern: regexMap, options: .caseInsensitive)
+        let matchesMap = REMap.matches(in: row, options: .reportProgress, range: NSRange(location: 0, length: row.count))
+        print(matchesMap.count)
+        for item in matchesMap {
             let string = (row as NSString).substring(with: item.range)
             print(string)
-        }
-        let xs = row.replacingOccurrences(of: ",", with: " ").replacingOccurrences(of: "\"", with: "").components(separatedBy: " ")
-        for str in xs {
-            let ixs = str.components(separatedBy: "=")
+            let ixs = string.components(separatedBy: "=")
             guard ixs.count == 2 else {
                 continue
             }
-            guard let key = ixs.first, let value = ixs.last else {
+            guard let key = ixs.first, let value = ixs.last?.replacingOccurrences(of: "\"", with: "") else {
                 continue
             }
             guard key.count > 0, value.count > 0 else {
