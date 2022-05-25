@@ -107,8 +107,10 @@ public final class Parser {
 //        let regex = "#EXT.*:(-?\\d+)\\s(.*?=.*?)\\s?\\,\\s?(.*?$)"
 //        let RE = try NSRegularExpression(pattern: regex, options: .caseInsensitive)
 //        let matches = RE.matches(in: row, options: .reportProgress, range: NSRange(location: 0, length: row.count))
-        
-        let regexMap = "(\\S*?=\".*?\")"
+        // https://regex101.com/
+        /** (\S*?=\".*?[^=]+\") */ 
+        // https://regex101.com/r/9zPeV2/1
+        let regexMap = "(\\S*?=\".*?[^=]+\")"
         let REMap = try NSRegularExpression(pattern: regexMap, options: .caseInsensitive)
         let matchesMap = REMap.matches(in: row, options: .reportProgress, range: NSRange(location: 0, length: row.count))
         print(matchesMap.count)

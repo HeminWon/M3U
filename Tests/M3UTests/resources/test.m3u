@@ -1,6 +1,12 @@
-﻿#EXTM3U x-tvg-url="http://epg.51zmt.top:8000/e.xml"
-#EXTINF:-1 group-title="ラブ ジェネレーション(1997)" tvg-name="ラブ ジェネレーション(1997)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/8d/RainbowBridge_over_TokyoBay.jpg", 第一回
-https://m3u8.taopianplay.com/taopian/54fdb532-e89b-4567-bc07-aa93a0c6a79b/f2703a0a-6584-4f80-a839-20b7becd4581/47195/fa262dae-7abf-4bdc-91ab-bbdff3c338f3/SD/playlist.m3u8
+#EXTM3U x-tvg-url="http://epg.51zmt.top:8000/e.xml"
+#EXTINF:-1 group-title="ラブ \"ジェネレーション(1997)" tvg-name="ラブ ジェネレーション(1997)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/8d/RainbowBridge_over_TokyoBay.jpg", 第一回
+http://39.135.49.209:6610/PLTV/88888888/224/3221226908/1.m3u8?servicetype=1
+#EXTINF:-1 group-title="12323" tvg-name="ラブ ジェネレーション(1997)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/8d/RainbowBridge_over_TokyoBay.jpg", 第一回
+http://39.135.49.209:6610/PLTV/88888888/224/3221226908/1.m3u8?servicetype=1
+#EXTINF:-1 group-title="1 2 323" tvg-name="ラブ ジェネレーション(1997)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/8d/RainbowBridge_over_TokyoBay.jpg", 第一回
+http://39.135.49.209:6610/PLTV/88888888/224/3221226908/1.m3u8?servicetype=1
+#EXTINF:-1 group-title="1 2 \s 323" tvg-name="ラブ ジェネレーション(1997)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/8d/RainbowBridge_over_TokyoBay.jpg", 第一回
+http://39.135.49.209:6610/PLTV/88888888/224/3221226908/1.m3u8?servicetype=1
 #EXTINF:-1 group-title="ラブ ジェネレーション(1997)" tvg-name="ラブ ジェネレーション(1997)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/8d/RainbowBridge_over_TokyoBay.jpg", 第二回
 https://m3u8.taopianplay.com/taopian/54fdb532-e89b-4567-bc07-aa93a0c6a79b/f2703a0a-6584-4f80-a839-20b7becd4581/47195/be235483-634e-47e9-9c2e-c76da92b7ded/SD/playlist.m3u8
 #EXTINF:-1 group-title="ラブ ジェネレーション(1997)" tvg-name="ラブ ジェネレーション(1997)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/8d/RainbowBridge_over_TokyoBay.jpg", 第三回
@@ -2056,4 +2062,4 @@ http://ff1b0571.russtv.net/iptv/V88EYWK93ZQKMQ/7344/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="SKY SPORTS GOLF" tvg-logo="" group-title="欧美II组",SKY SPORTS GOLF(备)
 http://ff1b0571.russtv.net/iptv/V88EYWK93ZQKMQ/7344/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="Golf Channel HD" tvg-logo="" group-title="欧美II组",Golf Channel HD
-http://ff1b0571.russtv.net/iptv/V88EYWK93ZQKMQ/6481/index.m3u8
+http://ff1b0571.russtv.net/iptv/V88EYWK93ZQKMQ/6481/index.m3u8
