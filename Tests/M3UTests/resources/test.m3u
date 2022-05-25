@@ -1,9 +1,9 @@
 #EXTM3U x-tvg-url="http://epg.51zmt.top:8000/e.xml"
-#EXTINF:-1 group-title="ラブ \"ジェネレーション(1997)" tvg-name="ラブ ジェネレーション(1997)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/8d/RainbowBridge_over_TokyoBay.jpg", 第一回
+#EXTINF:-1 group-title="1 2 == "323 = " tvg-name="ラブ ジェネレーション(1997)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/8d/RainbowBridge_over_TokyoBay.jpg", 第一回
 http://39.135.49.209:6610/PLTV/88888888/224/3221226908/1.m3u8?servicetype=1
-#EXTINF:-1 group-title="12323" tvg-name="ラブ ジェネレーション(1997)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/8d/RainbowBridge_over_TokyoBay.jpg", 第一回
+#EXTINF:-1 group-title = ""ラーション"(1997)" tvg-name="ラブ ジョン(1997)" tvg-logo="https://upload.wikoBay.jpg ", 第一回
 http://39.135.49.209:6610/PLTV/88888888/224/3221226908/1.m3u8?servicetype=1
-#EXTINF:-1 group-title="1 2 323" tvg-name="ラブ ジェネレーション(1997)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/8d/RainbowBridge_over_TokyoBay.jpg", 第一回
+#EXTINF:-1 group-title="12323" tvg-name="ラブ ジェネレーション(1997)" tvg-logo="", 第一回
 http://39.135.49.209:6610/PLTV/88888888/224/3221226908/1.m3u8?servicetype=1
 #EXTINF:-1 group-title="1 2 \s 323" tvg-name="ラブ ジェネレーション(1997)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/8d/RainbowBridge_over_TokyoBay.jpg", 第一回
 http://39.135.49.209:6610/PLTV/88888888/224/3221226908/1.m3u8?servicetype=1
@@ -2062,4 +2062,4 @@ http://ff1b0571.russtv.net/iptv/V88EYWK93ZQKMQ/7344/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="SKY SPORTS GOLF" tvg-logo="" group-title="欧美II组",SKY SPORTS GOLF(备)
 http://ff1b0571.russtv.net/iptv/V88EYWK93ZQKMQ/7344/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="Golf Channel HD" tvg-logo="" group-title="欧美II组",Golf Channel HD
-http://ff1b0571.russtv.net/iptv/V88EYWK93ZQKMQ/6481/index.m3u8
+http://ff1b0571.russtv.net/iptv/V88EYWK93ZQKMQ/6481/index.m3u8

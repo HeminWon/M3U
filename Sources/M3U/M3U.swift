@@ -107,23 +107,26 @@ public final class Parser {
 //        let regex = "#EXT.*:(-?\\d+)\\s(.*?=.*?)\\s?\\,\\s?(.*?$)"
 //        let RE = try NSRegularExpression(pattern: regex, options: .caseInsensitive)
 //        let matches = RE.matches(in: row, options: .reportProgress, range: NSRange(location: 0, length: row.count))
-        // https://regex101.com/
-        /** (\S*?=\".*?[^=]+\") */ 
-        // https://regex101.com/r/9zPeV2/1
-        let regexMap = "(\\S*?=\".*?[^=]+\")"
+        // https://stackoverflow.com/questions/61346171/regex-match-between-last-occurrence-of-a-character-and-first-occurrence-of-anot
+        /** (\b\S+\s*=\s*\".*?[^=]+\"\B) */
+        // https://regex101.com/r/mvTU2O/1
+        let regexMap = "(\\b\\S+\\s*=\\s*\".*?[^=]+\"\\B)"
         let REMap = try NSRegularExpression(pattern: regexMap, options: .caseInsensitive)
         let matchesMap = REMap.matches(in: row, options: .reportProgress, range: NSRange(location: 0, length: row.count))
         print(matchesMap.count)
         for item in matchesMap {
             let string = (row as NSString).substring(with: item.range)
-            print(string)
-            let ixs = string.components(separatedBy: "=")
-            guard ixs.count == 2 else {
+            guard let range = string.range(of: "=") else {
+                print(string)
                 continue
             }
-            guard let key = ixs.first, let value = ixs.last?.replacingOccurrences(of: "\"", with: "") else {
-                continue
-            }
+            let oriK = string.prefix(upTo: range.lowerBound)
+            let oriV = string.suffix(from: range.upperBound)
+            let key = oriK.trimmingCharacters(in: .whitespaces)
+            var processingValue = oriV.trimmingCharacters(in: .whitespaces)
+            if processingValue.hasPrefix("\"") {processingValue.removeFirst()}
+            if processingValue.hasSuffix("\"") {processingValue.removeLast()}
+            let value = processingValue.trimmingCharacters(in: .whitespaces)
             guard key.count > 0, value.count > 0 else {
                 continue
             }
