@@ -19,6 +19,22 @@ final class M3UTests: XCTestCase {
         }
         XCTAssertEqual(URL(string: str)?.lastPathComponent, "test.m3u")
     }
+    
+    func testExample2() throws {
+        guard let str = Bundle.module.path(forResource: "zho", ofType: "m3u") else {
+            XCTAssert(false)
+            return
+        }
+        do {
+            let chanel = try M3U.load(path: URL(fileURLWithPath: str))
+            print(chanel)
+            
+        } catch {
+            print(error)
+        }
+        XCTAssertEqual(URL(string: str)?.lastPathComponent, "zho.m3u")
+    }
+    
 }
 
 #if XCODE_BUILD

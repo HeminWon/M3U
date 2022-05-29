@@ -25,6 +25,8 @@ let package = Package(
             name: "M3UTests",
             dependencies: ["M3U"],
             resources: [
-                .process("resources/test.m3u")]),
+                .process("resources/test.m3u"),
+                .process("resources/zho.m3u")
+            ]),
     ]
 )

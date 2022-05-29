@@ -16,7 +16,7 @@ extension M3uError: CustomStringConvertible {
     public var description: String {
         switch self {
         case .invalidEXTM3U:
-            return "#EXTM3U "
+            return "“#EXTM3U” must be the first line of the file without annotation"
         }
     }
 }
