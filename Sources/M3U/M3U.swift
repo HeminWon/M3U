@@ -50,14 +50,18 @@ public struct Channel: Codable {
 }
 
 public struct M3U {
-    public static func load(content: String) throws -> [Channel] {
-        return try Parser.init(content:content).m3uToChannels()
+    public static func loadChannels(content: String) throws -> [Channel] {
+        return try Parser.init(content:content).m3uToPlaylist().channels ?? [Channel]()
     }
     
-    public static func load(path: URL) throws -> [Channel] {
-        return try Parser.init(path: path).m3uToChannels()
+    public static func loadChannels(path: URL) throws -> [Channel] {
+        return try Parser.init(path: path).m3uToPlaylist().channels ?? [Channel]()
     }
 
+    public static func load(path: URL) throws -> Playlist {
+        return try Parser.init(path: path).m3uToPlaylist()
+    }
+    
     public init() {
     }
 }
@@ -65,7 +69,6 @@ public struct M3U {
 public final class Parser {
     public let m3ucontent: String
     
-    var listach = [Channel]()
     
     public init(content: String) throws {
         m3ucontent = content
@@ -76,7 +79,45 @@ public final class Parser {
         m3ucontent = content
     }
     
-    public func m3uToChannels() throws -> [Channel] {
+    public func m3uToPlaylist() throws -> Playlist {
+        let rows = try self.m3ucontentToRows(content: self.m3ucontent)
+        
+        guard rows.first!.hasPrefix(PlaylistTag.EXTM3U.rawValue) else {
+            throw M3uError.invalidEXTM3U
+        }
+
+        var channels = [Channel]()
+        var m3uExtend = [[String : String]]()
+        var chanel = Channel()
+        for row in rows {
+            if row.hasPrefix(PlaylistTag.EXTM3U.rawValue) {
+                if let info = try self.parseEXTM3U(row) {
+                    m3uExtend.append(info)
+                }
+            }
+            else if row.hasPrefix(PlaylistTag.EXTINF.rawValue) {
+                chanel.propMap = try self.parseProperties(row: row)
+                let json = try JSONSerialization.data(withJSONObject: chanel.propMap as Any)
+                let prop = try JSONDecoder().decode(ChannelProperty.self, from: json)
+                chanel.prop = prop
+                chanel.name = self.parseName(row: row)
+            }
+            else if row.contains("://") {
+                chanel.url = row.trimmingCharacters(in: .whitespaces)
+                guard chanel.name != nil else {
+                    continue
+                }
+                channels.append(chanel)
+                chanel = Channel()
+            }
+        }
+        var playlist = Playlist()
+        playlist.m3uExtend = m3uExtend.count > 0 ? m3uExtend : nil
+        playlist.channels = channels.count > 0 ? channels : nil
+        return playlist
+    }
+    
+    func m3ucontentToRows(content: String) throws -> [String] {
         let oriRows = m3ucontent.components(separatedBy:.newlines).filter { return $0.count > 0 }
         guard oriRows.count > 0 else {
             throw M3uError.invalidEXTM3U
@@ -95,35 +136,7 @@ public final class Parser {
             }
             return false
         }
-        
-        guard rows.first!.hasPrefix(PlaylistTag.EXTM3U.rawValue) else {
-            throw M3uError.invalidEXTM3U
-        }
-        var chanel = Channel()
-        for row in rows {
-            if row.hasPrefix(PlaylistTag.EXTM3U.rawValue) {
-                _ = try self.parseEXTM3U(row)
-            }
-            else if row.hasPrefix(PlaylistTag.EXTINF.rawValue) {
-                chanel.propMap = try self.parseProperties(row: row)
-                let json = try JSONSerialization.data(withJSONObject: chanel.propMap as Any)
-                let prop = try JSONDecoder().decode(ChannelProperty.self, from: json)
-                chanel.prop = prop
-                chanel.name = self.parseName(row: row)
-            }
-            else if row.contains("://") {
-                chanel.url = row.trimmingCharacters(in: .whitespaces)
-                guard chanel.name != nil else {
-                    continue
-                }
-                listach.append(chanel)
-                chanel = Channel()
-            }
-        }
-        guard listach.count > 0 else {
-            throw M3uError.invalidEXTM3U
-        }
-        return listach
+        return rows
     }
     
     func parseName(row: String) -> String? {
@@ -159,7 +172,7 @@ public final class Parser {
         return [key : value]
     }
     
-    func parseEXTM3U(_ row: String) throws -> [String: String] {
+    func parseEXTM3U(_ row: String) throws -> [String: String]? {
         var retdict = [String: String]()
         // https://regex101.com/r/jMtkMd/1
         // /(\b\S+\s*=(\s*\".*?[^=]+\"\B|\S+))/gm
@@ -172,7 +185,7 @@ public final class Parser {
                 retdict = retdict.merging(keyValue) { (first, _) -> String in return first }
             }
         }
-        return retdict
+        return retdict.keys.count > 0 ? retdict : nil
     }
     
     func parseProperties(row: String) throws -> [String: String] {

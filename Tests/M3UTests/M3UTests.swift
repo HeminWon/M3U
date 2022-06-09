@@ -10,6 +10,10 @@ final class M3UTests: XCTestCase {
             XCTAssert(false)
             return
         }
+        
+//        let url = URL(string: "http://epg.51zmt.top:8000/e.xml")!
+//        let st =  try String(contentsOf: url)
+        
         do {
             let chanel = try M3U.load(path: URL(fileURLWithPath: str))
             print(chanel)
